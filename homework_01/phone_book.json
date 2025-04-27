@@ -1,0 +1,39 @@
+{
+    "phonebook": [
+        {
+            "phone": "+7 812 963-54-44",
+            "name": "Ого",
+            "lastname": "Хого",
+            "birthday": "10.12.2019",
+            "note": "открыты с 12 до 23"
+        },
+        {
+            "phone": "+7 812 507-07-77",
+            "name": "+7 812 507-07-77",
+            "lastname": "",
+            "birthday": "",
+            "note": "Велодрайв на Академке"
+        },
+        {
+            "phone": "+78123052222",
+            "name": "",
+            "lastname": "Колесо.ру",
+            "birthday": "",
+            "note": "Напомнить про герметик"
+        },
+        {
+            "phone": "+7 931 1052113",
+            "name": "Artista",
+            "lastname": "",
+            "birthday": "",
+            "note": ""
+        },
+        {
+            "phone": "89621768464",
+            "name": "Wellna",
+            "lastname": "Квадрики",
+            "birthday": "",
+            "note": ""
+        }
+    ]
+}
