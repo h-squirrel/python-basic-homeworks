@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-7">
+
+        <div class="row">
+    {% for nut in nuts %}
+
+          <div class="col-4">
+            <div class="card" style="width: 10rem;">
+              <img src="{{ nut.img_src }}" class="card-img-top" width="50" height="100" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{ nut.name }}</h5>
+                <a href="{{ url_for('show_nut_detail', nut_name=nut.name) }}" class="btn btn-primary">Перейти к описанию</a>
+              </div>
+            </div>
+          </div>
+    {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-4">
+
+        <h5>Добавить орех в коллекцию</h5>
+        <form action="add_nut" enctype="multipart/form-data" method="post">
+          <div class="mb-3">
+            <label for="name" class="form-label">Название</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Введите название ореха">
+          </div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Изображение</label>
+            <input type="text" class="form-control" id="image" name="image" placeholder="Добавьте url изображения">
+          </div>
+          <div class="mb-3">
+            <label for="desc" class="form-label">Описание</label>
+            <input type="text" class="form-control" id="desc" name="desc" placeholder="Добавьте описание">
+          </div>
+          <div class="mb-3">
+            <label for="w_min" class="form-label">Минимальный вес одного орешка</label>
+            <input type="number" class="form-control" id="w_min" name="w_min" placeholder="Укажите вес в граммах (целое число)">
+          </div>
+          <div class="mb-3">
+            <label for="w_max" class="form-label">Максимальный вес одного орешка </label>
+            <input type="number" class="form-control" id="w_max" name="w_max" placeholder="Укажите вес в граммах (целое число)">
+          </div>
+          <button type="submit" class="submit btn btn-primary">Отправить</button>
+        </form>
+
+    </div>
+
+  </div>
+</div>
+
+
+{% endblock %}

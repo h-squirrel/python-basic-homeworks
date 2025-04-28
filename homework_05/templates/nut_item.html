@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+
+<div class="col-3 bg-success">
+  <img src="{{ nut_obj.img_src }}" class="card-img-top" alt="...">
+</div>
+<div class="col-7">
+    <h2>{{nut_obj.name}}</h2>
+    <p>Вес одного орешка: {{nut_obj.weight_one_nut_min}} - {{nut_obj.weight_one_nut_max}} грамм</p>
+    <p>{{nut_obj.description}}</p>
+</div>
+
+{% endblock %}
