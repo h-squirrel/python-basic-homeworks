@@ -93,7 +93,7 @@ class PhoneBookModel:
     def open_phonebook(self) -> None:
         if self.is_phonebook_open():
             raise pb_errors.PBReopeningError()
-        with open(PhoneBookModel.phonebook_file_name, "r", encoding='utf-8') as phonebook_file:
+        with open(self.phonebook_file_name, "r", encoding='utf-8') as phonebook_file:
             json_data: dict = load(phonebook_file)
             if not PhoneBookModel.phonebook_key_contact_list in json_data:
                 raise pb_errors.PBDataFileError()
@@ -110,7 +110,7 @@ class PhoneBookModel:
             raise pb_errors.PBNoOpenBookFoundError()
         if not self.change_flag:
             raise pb_errors.PBExistChangesError()
-        with open(PhoneBookModel.phonebook_file_name, "w", encoding='utf-8') as phonebook_file:
+        with open(self.phonebook_file_name, "w", encoding='utf-8') as phonebook_file:
             phonebook_file.write(dumps(self.phonebook_dict, indent=4, ensure_ascii=False))
             self.change_flag = False
 
@@ -140,6 +140,9 @@ class PhoneBookModel:
             new_contact[PhoneBookModel.const_to_str_field_name(key)] = contact[key]
         if ("" == new_contact["name"]) and ("" == new_contact["lastname"]):
             new_contact["name"] = new_contact["phone"]
+        elif ((new_contact['name'] == new_contact['phone']) and
+              ("" != new_contact['lastname'])):
+            new_contact['name'] = ""
         new_contact_idx = len(self.contact_list)
         self.contact_list.append(new_contact)
         self.change_flag = True
@@ -161,16 +164,15 @@ class PhoneBookModel:
         if 'phone' == str_field_name:
             if not PhoneBookModel.__check_phone_data(field_value):
                 raise pb_errors.PBFieldValueError()
-        elif 'name' == str_field_name:
-            if ("" == field_value) and ("" == self.contact_list[idx]['lastname']):
-                data = self.contact_list[idx]['phone']
-        elif 'lastname' == str_field_name:
-            if ("" == field_value) and ("" == self.contact_list[idx]['name']):
-                self.contact_list[idx]['name'] = self.contact_list[idx]['phone']
         elif 'birthday' == str_field_name:
             if not PhoneBookModel.__check_birthday_data(field_value):
                 raise pb_errors.PBFieldValueError()
         self.contact_list[idx][str_field_name] = field_value
+        if ("" == self.contact_list[idx]['lastname']) and ("" == self.contact_list[idx]['name']):
+            self.contact_list[idx]['name'] = self.contact_list[idx]['phone']
+        elif ((self.contact_list[idx]['name'] == self.contact_list[idx]['phone']) and
+              ("" != self.contact_list[idx]['lastname'])):
+            self.contact_list[idx]['name'] = ""
         self.change_flag = True
         return self.contact_list[idx]
 
